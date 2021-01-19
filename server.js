@@ -18,7 +18,12 @@ const app = express();
 const port = 3000;
 
 // Set the Access Token which is used to authorize to a merchant
-const accessToken = 'REPLACE_WITH_ACCESS_TOKEN';
+
+//sandbox
+//const accessToken = 'EAAAED1Xz-1n4uBs73c_yBv5yODqtxsYYvFpieu1Ugh46A2zsRbnOphg6ESiYrOx';
+
+//Production
+const accessToken = 'EAAAEDIAz_75qwsmW-HT3xUYPQfXgLxjcSuUJUKMKPwJ3_OGKS3xgnSmB61gnTRa';
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -40,7 +45,7 @@ app.post('/process-payment', async (req, res) => {
   const requestBody = {
     sourceId: requestParams.nonce,
     amountMoney: {
-      amount: 100, // $1.00 charge
+      amount: 300, // $1.00 charge
       currency: 'USD'
     },
     locationId: requestParams.location_id,
