@@ -15,36 +15,212 @@
 <html>
   <head>
     <!-- link to the SqPaymentForm library -->
-    <script type="text/javascript" src="https://js.squareup.com/v2/paymentform">
-    </script>
+    <script type="text/javascript" src="https://js.squareupsandbox.com/v2/paymentform"></script>
+    <!--<script type="text/javascript" src="https://js.squareup.com/v2/paymentform"></script>-->
 
     <!-- link to the local custom styles for SqPaymentForm -->
     <link rel="stylesheet" type="text/css" href="mysqpaymentform.css">
 
+    <!-- JSFORCE -->
+    <meta id="sf-canvas-signed-request" content="<%= verifiedSignedRequestJSON %>" />
+    <script src="https://login.salesforce.com/canvas/sdk/js/42.0/canvas-all.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsforce/1.9.1/jsforce.min.js"></script>
+    <script>
+      var sr = document.getElementById('sf-canvas-signed-request').content;
+      var conn = new jsforce.Connection({ signedRequest: sr });
+      conn.query('SELECT Id, Name FROM Account', function(err, res) {
+        if (err) { 
+          return console.error(err); }
+          console.log(res);
+        });
+
+        //locationID : 'L6W6S3NM2E1X9'
+        //Square Salesforce Checkout API Access Token : 'EAAAED1Xz-1n4uBs73c_yBv5yODqtxsYYvFpieu1Ugh46A2zsRbnOphg6ESiYrOx'
+    </script>
+
   </head>
   <body>
-    Get ready for your first payment with Square!
-    <div id="form-container">
+    
+    <div class="container">
+      <h1 class="text-center padding-vertical-medium border-header">      
+        <img src="https://standardfireny--c.na71.content.force.com/servlet/servlet.FileDownload?file=0151G000003vgJb" width="100" height="100" alt="logo"/>
+        <div>
+          WO # 02886
+        </div>
+      </h1>
+      
+      <div class="row checkout-row">
+         <div class="col-60 checkout-column">
+            <div class="cart-before-form">
+               <h2 class="checkout-header padding-vertical-medium">Order Details</h2>
+               <div class="order-details-section">
+                  <div class="order-details-section__item">
+                     <div class="order-details-section__item__desc">
+                        description of bathroom install single
+                     </div>
+                     <div class="order-details-section__item__price font-weight-500">
+                        $2,000.00
+                     </div>
+                  </div>
+                  <div class="order-details-section__item">
+                     <div class="order-details-section__item__desc">
+                        Copper Fitting 1/2" - 1"
+                     </div>
+                     <div class="order-details-section__item__price font-weight-500">
+                        $75.00
+                     </div>
+                  </div>
+                  <div class="order-details-section__item">
+                     <div class="order-details-section__item__desc">
+                        No Hub Pipe 4"
+                     </div>
+                     <div class="order-details-section__item__price font-weight-500">
+                        $300.00
+                     </div>
+                  </div>
+                  <div class="order-details-section__item">
+                    <div class="order-details-section__item__desc">
+                       Labor
+                    </div>
+                    <div class="order-details-section__item__price font-weight-500">
+                       $164.67
+                    </div>
+                 </div>
+               </div>
+               <div class="order-details-section">
+                  <div class="font-weight-500">
+                     Total
+                     <span class="float-right">$2,539.67</span>
+                  </div>
+               </div>
+            </div>
+            <form action="/v2/checkout" method="post">
+               <h2 class="checkout-header padding-vertical-medium">Receipt Information</h2>
+               <div class="checkout-form">
+                  <div class="input-row">
+                    <div class="input-row__label">Email</div>
+                    <div class="input-container">
+                      <input type="email" class="input-row__input" name="email" placeholder="ar@standardplumbingny.com" required="" value="" pattern="^[\w!#$%&amp;'*+-/=?^{|}~]+@(((([a-z0-9]{1}[a-z0-9-]{0,62}[a-z0-9]{1})|[a-z])\.)+[a-z0-9-]{2,24})|(\d{1,3}\.){3}\d{1,3}(:\d{1,5})?$">
+                    </div>
+                </div>
+               </div>
+               <h2 class="checkout-header padding-vertical-medium">Payment Information</h2>
+               <div class="checkout-form">
+                  <div class="input-row">
+                     <div class="input-row__label">Name on Card</div>
+                     <div class="input-container">
+                      <input class="input-row__input" placeholder="Jane Doe" name="card_fullname" maxlength="26" required="">
+                    </div>
+                  </div>
+                  <div class="input-row" data-card-brand="unknown">
+                     <div class="input-row__label">Card Number</div>
+                     <div class="input-container">
+                        <iframe id="sq-card-number" name="sq-card-number" class="sq-input input-row__input" frameborder="0" width="100%" scrolling="no" height="48" src="https://pci-connect.squareupsandbox.com/v2/iframe?type=cardNumber&amp;version=4a3a67052c"></iframe>
+                        <div class="input-row__card-image"></div>
+                     </div>
+                  </div>
+                  <div class="input-row">
+                     <div class="input-row__label">Card Details</div>
+                     <div class="input-row__sq-input-group">
+                        <div id="input-container__input--expiration-date" class="input-container">
+                           <iframe id="sq-expiration-date" name="sq-expiration-date" class="sq-input input-row__input" frameborder="0" width="100%" scrolling="no" height="48" src="https://pci-connect.squareupsandbox.com/v2/iframe?type=expirationDate&amp;version=4a3a67052c"></iframe>
+                        </div>
+                        <div id="input-container__input--cvv" class="input-container">
+                           <iframe id="sq-cvv" name="sq-cvv" class="sq-input input-row__input" frameborder="0" width="100%" scrolling="no" height="48" src="https://pci-connect.squareupsandbox.com/v2/iframe?type=cvv&amp;version=4a3a67052c"></iframe>
+                        </div>
+                        <div id="input-container__input--postal-code" class="input-container">
+                           <iframe id="sq-postal-code" name="sq-postal-code" class="sq-input input-row__input" frameborder="0" width="100%" scrolling="no" height="48" src="https://pci-connect.squareupsandbox.com/v2/iframe?type=postalCode&amp;version=4a3a67052c"></iframe>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <input type="hidden" name="checkout_token" value="CBASEEy_wVvKZ0I7G4TJ4XJe09E">
+               <input type="hidden" name="order_token" value="iI0hi9ypJo2bwg5O5HIjSIZBRb4F">
+               <input type="hidden" name="location_token" value="L6W6S3NM2E1X9">
+               <input type="hidden" name="idempotency_key">
+               <input type="hidden" name="nonce" id="card-nonce">
+               <input type="hidden" name="card_brand" id="card-brand">
+               <input type="hidden" name="last_four" id="last-four">
+               <input name="nds-pmd" type="hidden" value="{&quot;jvqtrgQngn&quot;:{&quot;oq&quot;:&quot;1272:329:1272:329:1272:329&quot;,&quot;wfi&quot;:&quot;flap-151081&quot;,&quot;oc&quot;:&quot;700&quot;,&quot;fe&quot;:&quot;1272k329 24&quot;,&quot;qvqgm&quot;:&quot;300&quot;,&quot;jxe&quot;:958495,&quot;syi&quot;:&quot;snyfr&quot;,&quot;si&quot;:&quot;si,btt,zc4,jroz&quot;,&quot;sn&quot;:&quot;sn,zcrt,btt,jni&quot;,&quot;us&quot;:&quot;o6os7443n0443p83&quot;,&quot;cy&quot;:&quot;Jva32&quot;,&quot;sg&quot;:&quot;{\&quot;zgc\&quot;:1,\&quot;gf\&quot;:gehr,\&quot;gr\&quot;:gehr}&quot;,&quot;sp&quot;:&quot;{\&quot;gp\&quot;:gehr,\&quot;ap\&quot;:gehr}&quot;,&quot;sf&quot;:&quot;gehr&quot;,&quot;jt&quot;:&quot;s2nno0055p58o750&quot;,&quot;sz&quot;:&quot;o65521rrr8ps0sos&quot;,&quot;vce&quot;:&quot;apvc,0,60072r47,2,1;fg,0,,0,,0;gr,r840,4r1,q1,;gf,0,r840;gr,s484,4q8,14p,;gf,0,1qpp4;gr,1r7s,4q1,13q,;gr,o911,464,199,;gf,0,2o454;zz,51,464,199,;zp,o,464,199,;zzf,3qr,0,n,ABC;zzf,3r7,3r7,n,ABC;zzf,3r9,3r9,n,ABC;zzf,3r8,3r8,n,ABC;zzf,3r8,3r8,n,ABC;zzf,3r8,3r8,n,ABC;zzf,3r8,3r8,n,ABC;zzf,3r8,3r8,n,ABC;zzf,3r8,3r8,n,ABC;zzf,3r9,3r9,n,ABC;zzf,2714,2714,32,ABC;gf,0,302po;zzf,2710,2710,32,ABC;zzf,2710,270s,32,ABC;gf,0,350ro;zzf,270s,2710,32,ABC;zzf,2sn9,2sn9,32,ABC;gf,0,3n7n3;zzf,2710,2710,32,ABC;zzf,rn64,rn64,1r,ABC;gf,0,4o917;zzf,rn60,rn60,1r,ABC;gf,0,5n377;zzf,rn60,rn60,1r,ABC;gf,0,68qq7;zzf,rn60,rn60,1r,ABC;gf,0,77837;gr,7o7n,4nq,83,;gf,0,7s3o1;gr,6880,14s,11q,rznvy;gf,0,85p31;zz,3n,14s,11q,rznvy;xx,1,0,rznvy;ss,0,rznvy;zp,6,14s,11q,rznvy;gr,564,s6,11r,;so,2o,rznvy;zp,7,s6,11r,;zzf,8s,rn60,1r,q7n 74p,q7n 74p,83,1rnn,7n9,7n9,41;gr,327,157,11p,rznvy;xx,62,0,rznvy;ss,0,rznvy;zp,2,157,11p,rznvy;so,s7s,rznvy;&quot;,&quot;ns&quot;:&quot;&quot;},&quot;jg&quot;:&quot;1.j-669810.1.2.u9ICk_jHnYvjVcYwQpHCLt,,.qlsB7RtXEDy_yTS0uiwiV2Cs1Q26XXB3u0jb6PrGai4IT48yhaIqKI_u799bAPgTmMByC94W2CMWit4g4xKRyruHurWrhsRJHrkIOifRrr8dv9APttRR5Gz3GYrxd5tU0Eor5MAlZqhZjImN8caL8l9f3DGdh8QRdy2c0SMU8YzQRExoftolnP8YWs7m8lDIgtISsrVC9Zx19uxcJZ2oT-SGULEBymIXv_Rh23ECaJ_ggmOIBBg19To8Yw-xR_Qv&quot;}">
+            </form>
+         </div>
+         <div class="col-40 checkout-column">
+            <div class="cart-after-form">
+               <h2 class="checkout-header padding-vertical-medium">Order Details</h2>
+               <div class="order-details-section__item">
+                <div class="order-details-section__item__desc">
+                   description of bathroom install single
+                </div>
+                <div class="order-details-section__item__price font-weight-500">
+                   $2,000.00
+                </div>
+             </div>
+             <div class="order-details-section__item">
+                <div class="order-details-section__item__desc">
+                   Copper Fitting 1/2" - 1"
+                </div>
+                <div class="order-details-section__item__price font-weight-500">
+                   $75.00
+                </div>
+             </div>
+             <div class="order-details-section__item">
+                <div class="order-details-section__item__desc">
+                   No Hub Pipe 4"
+                </div>
+                <div class="order-details-section__item__price font-weight-500">
+                   $300.00
+                </div>
+             </div>
+             <div class="order-details-section__item">
+               <div class="order-details-section__item__desc">
+                  Labor
+               </div>
+               <div class="order-details-section__item__price font-weight-500">
+                  $164.67
+               </div>
+            </div>
+          </div>
+          <div class="order-details-section">
+             <div class="font-weight-500">
+                Total
+                <span class="float-right">$2,539.67</span>
+             </div>
+          </div>
+            </div>
+            <div class="button-container padding-vertical-small">
+              <button id="sq-creditcard" class="button-credit-card" onclick="onGetCardNonce(event)">Pay $2,539.67</button>
+              <!--<input type="submit" value="Place Order" class="button button--primary button--block">-->
+            </div>
+         </div>
+      </div>
+   </div>
+
+
+    <!--
+    <div class="form-container">
       <div id="sq-card-number"></div>
       <div class="third" id="sq-expiration-date"></div>
       <div class="third" id="sq-cvv"></div>
       <div class="third" id="sq-postal-code"></div>
       <button id="sq-creditcard" class="button-credit-card" onclick="onGetCardNonce(event)">Pay $1.00</button>
-    </div> <!-- end #form-container --> 
+      <div class="third"></div>
+      <button id="sq-getSquareCheckout" class="button-credit-card" onclick="window.open('https://connect.squareupsandbox.com/v2/checkout?c=CBASEEy_wVvKZ0I7G4TJ4XJe09E&l=L6W6S3NM2E1X9');">Redirect Through Square</button>
+    </div> 
+    -->
+
     <!-- TODO: Add script from step 1.1.3 -->
     <script type="text/javascript">
    
       //TODO: paste code from step 2.1.1
       const idempotency_key = uuidv4();
-
       
       // Create and initialize a payment form object
       const paymentForm = new SqPaymentForm({
         // Initialize the payment form elements
-        
-        //TODO: Replace with your sandbox application ID
-        applicationId: "sq0idp-PR_kFzpQ7pFW7lLkgvhB1w",
-        //applicationId: "sandbox-sq0idb-nJuzIar1cYSOyAiWgJss5g",
+        //Production
+        //applicationId: "sq0idp-PR_kFzpQ7pFW7lLkgvhB1w", 
+        //Sandbox
+        applicationId: "sandbox-sq0idb-nJuzIar1cYSOyAiWgJss5g", 
         inputClass: 'sq-input',
         autoBuild: false,
         // Customize the CSS for SqPaymentForm iframe elements
@@ -98,7 +274,7 @@
               body: JSON.stringify({
                 nonce: nonce,
                 idempotency_key: idempotency_key,
-                location_id: "LNPH8DQZJAD8K"
+                location_id: "L6W6S3NM2E1X9"
               })   
             })
             .catch(err => {
@@ -125,6 +301,7 @@
      });
     //TODO: paste code from step 1.1.4
     //TODO: paste code from step 1.1.5
+    //builds form
     paymentForm.build();
       
     //TODO: paste code from step 2.1.2
@@ -145,6 +322,12 @@
       // Request a nonce from the SqPaymentForm object
       paymentForm.requestCardNonce();
     }
+
+    /*
+    window.onload = function() {
+      window.location.href = "https://connect.squareupsandbox.com/v2/checkout?c=CBASEEy_wVvKZ0I7G4TJ4XJe09E&l=L6W6S3NM2E1X9";
+    }
+    */
 
     </script>
  
