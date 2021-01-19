@@ -13,6 +13,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { Client, Environment, ApiError } = require('square');
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
+const { window } = new JSDOM(`<!DOCTYPE html>`);
+const $ = require('jQuery')(window);
 
 const app = express();
 const port = 3000;
@@ -45,7 +49,7 @@ app.post('/process-payment', async (req, res) => {
   const requestBody = {
     sourceId: requestParams.nonce,
     amountMoney: {
-      amount: 2853967, 
+      amount: requestParams.cartAfterTotal, 
       currency: 'USD'
     },
     locationId: requestParams.location_id,

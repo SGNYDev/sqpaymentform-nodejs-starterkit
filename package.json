@@ -9,6 +9,8 @@
     "body-parser": "^1.19.0",
     "eslint": "^7.18.0",
     "express": "^4.17.0",
+    "jquery": "^3.5.1",
+    "jsdom": "^16.4.0",
     "jsforce": "^1.10.1",
     "square": "7.0.0"
   },
