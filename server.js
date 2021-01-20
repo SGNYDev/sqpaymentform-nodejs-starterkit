@@ -19,8 +19,11 @@ const { window } = new JSDOM(`<!DOCTYPE html>`);
 const $ = require('jQuery')(window);
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
+console.log("Environment is: ", Environment);
+console.log("port is: ", process.env.PORT);
 
+//const port = process.env.PORT || 3000 ;
 // Set the Access Token which is used to authorize to a merchant
 
 //sandbox
@@ -44,12 +47,14 @@ const client = new Client({
 app.post('/process-payment', async (req, res) => {
   const requestParams = req.body;
 
+  console.log("requestParams: ", requestParams);
+  
   // Charge the customer's card
   const paymentsApi = client.paymentsApi;
   const requestBody = {
     sourceId: requestParams.nonce,
     amountMoney: {
-      amount: requestParams.cartAfterTotal, 
+      amount: requestParams.cartAfterTotal * 100, 
       currency: 'USD'
     },
     locationId: requestParams.location_id,
@@ -75,6 +80,7 @@ app.post('/process-payment', async (req, res) => {
     });
   }
 });
+
 
 app.listen(
   port,

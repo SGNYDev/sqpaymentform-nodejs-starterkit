@@ -260,9 +260,9 @@
                 nonce: nonce,
                 idempotency_key: idempotency_key,
                 location_id: "L6W6S3NM2E1X9",
-                cartAfterTotal: Number($("#cart-after-total").text().replace(/[^0-9.-]+/g,"")),
-                paymentNameOnCard: $("paymentNameOnCard").val(),
-                receiptEmail: $("#receiptEmail").val()
+                cartAfterTotal: Number($("#cart-after-total").text().replace(/[^0-9.-]+/g,"")) || 0,
+                paymentNameOnCard: $("#paymentNameOnCard").val() || '',
+                receiptEmail: $("#receiptEmail").val() || ''
               })   
             })
             .catch(err => {
